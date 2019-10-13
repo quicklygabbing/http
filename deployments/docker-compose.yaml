@@ -1,0 +1,22 @@
+version: '3'
+
+networks:
+  quicklygabbing-dev:
+    external: true
+
+services:
+  quicklygabbing-http-api:
+    image: quicklygabbing-http-api
+    container_name: quicklygabbing-http-api
+    networks:
+      - quicklygabbing-dev
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    command: "./http"
+    env_file:
+      - ../configs/env/development/.go.env
+    volumes:
+      - ../development.ini:/quicklygabbing.ini
+    ports:
+      - 50080:80

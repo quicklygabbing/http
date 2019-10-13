@@ -1,0 +1,10 @@
+.git
+.idea
+.vscode
+.DS_Store
+
+/configs
+/deployments
+Dockerfile
+docker-compose.yaml
+http

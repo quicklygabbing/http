@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  quicklygabbing-test:
+    external: true
+
+services:
+  quicklygabbing-http-test-api:
+    image: quicklygabbing-http-test-api
+    container_name: quicklygabbing-http-test-api
+    networks:
+      - quicklygabbing-test
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    command: "./http"
+    env_file:
+      - ../configs/env/test/.go.env
+    volumes:
+      - ../configs/env/test/test.ini:/quicklygabbing.ini
+    ports:
+      - 80
+
+  quicklygabbing-http-test:
+    image: quicklygabbing-http-test-api
+    container_name: quicklygabbing-http-test
+    networks:
+      - quicklygabbing-test
+    command: "/test.sh"
+    env_file:
+      - ../configs/env/test/.go.env
+    volumes:
+      - ../scripts/bash/test.sh:/test.sh
+    depends_on:
+      - quicklygabbing-http-test-api
